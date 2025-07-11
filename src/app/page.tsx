@@ -15,22 +15,6 @@ export default function Home() {
   const [translatedText, setTranslatedText] = useState("");
   const [targetLanguage, setTargetLanguage] = useState("en");
 
-  // useEffect(() => {
-  //   if (!userText.trim() || !targetLanguage) return;
-
-  //   const fetchTranslation = async () => {
-  //     const response = await fetch("/api/translate", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({ text: userText, targetLanguage }),
-  //     });
-  //     const data = await response.json();
-  //     setSourceLanguage(data.sourceLanguage);
-  //     setTranslatedText(data.translation);
-  //   };
-  //   fetchTranslation();
-  // }, [targetLanguage, userText]);
-
   const handleTargetLanguageChange = async (newLang: string) => {
     setTargetLanguage(newLang);
   
@@ -46,6 +30,14 @@ export default function Home() {
     setSourceLanguage(data.sourceLanguage);
     setTranslatedText(data.translation);
   };
+
+  const handleSwap = () => {
+    setUserText(translatedText);
+    setTranslatedText(userText);
+    const tempLang = sourceLanguage;
+    setSourceLanguage(targetLanguage);
+    setTargetLanguage(tempLang);
+  }
 
   return (
     <div className="grid grid-cols-1 mt-[-80px]">
@@ -64,7 +56,7 @@ export default function Home() {
           sourceLanguage={sourceLanguage}
           onTranslate={() => {}}
         />
-        {/* <SwitchIcon /> */}
+        <SwitchIcon userText={userText} translated_text={translatedText} onClick={handleSwap}/>
         <Translation
           translated_text={translatedText}
           targetLanguage={targetLanguage}
