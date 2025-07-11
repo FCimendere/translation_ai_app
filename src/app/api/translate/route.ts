@@ -1,8 +1,8 @@
-import { openai } from "@ai-sdk/openai";
+import { google } from "@ai-sdk/google";
 import { generateText } from "ai";
 
 export const maxDuration = 30; // seconds
-export const maxTokens = 1000; // tokens
+export const maxTokens = 256; // tokens
 
 export async function POST(req: Request): Promise<Response> {
   const { text, targetLanguage } = await req.json();
@@ -11,14 +11,30 @@ export async function POST(req: Request): Promise<Response> {
     return new Response("Missing text or target language", { status: 400 });
   }
 
-  const prompt = `Translate the following text to ${targetLanguage}:\n\n${text} Do not change the meaning of the text, just translate it.`;
+  const prompt = `
+Detect the language of the following text and translate it to ${targetLanguage}.
+Respond in JSON format: {"sourceLanguage": "<detected language name>", "translation": "<translated text>"}
 
-  const { text: resultText } = await generateText({
-    model: openai("o1-mini"),
+Text:
+${text}
+`;
+
+  const { text: llmResponse } = await generateText({
+    model: google("models/gemini-2.0-flash-exp"),
     prompt,
     maxTokens,
     temperature: 0.5,
   });
+  let result;
+  try {
+    // Find the first { and last } to extract JSON substring
+    const jsonMatch = llmResponse.match(/{[\s\S]*}/);
+    if (!jsonMatch) throw new Error("No JSON found in LLM response");
+    result = JSON.parse(jsonMatch[0]);
+  } catch (e) {
+    return new Response("LLM response parse error", { status: 500 });
+  }
+  console.log("LLM Response:", llmResponse);
 
-  return Response.json({ result: resultText });
+  return Response.json(result);
 }
