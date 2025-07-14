@@ -51,6 +51,15 @@ export default function Home() {
     setTargetLanguage(tempLang);
   };
 
+  useEffect(() => {
+    if (userText.trim() === "") {
+      setTranslatedText("");
+      setSourceLanguage("");
+      setTargetLanguage("");
+
+    }
+  }, [userText]);
+
   return (
     <div className="grid grid-cols-1 mt-[-80px]">
       <h1 className="text-4xl text-center text-bold text-[color:var(--accent-400)] my-12 mx-2 p-6">

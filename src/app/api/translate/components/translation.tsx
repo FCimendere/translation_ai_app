@@ -55,8 +55,9 @@ const Translation = ({
         />
       </div>
       <textarea
-        value={translated_text}
+        value={translated_text?.charAt(0).toUpperCase() + translated_text?.slice(1)}
         readOnly
+        placeholder="Translation"
         maxLength={500}
         className="border border-gray-300 rounded-md p-4 min-h-[200px] resize-none focus:outline-none focus:ring-2 focus:ring-green-400 transition"
       />
