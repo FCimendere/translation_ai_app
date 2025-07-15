@@ -16,6 +16,7 @@ export default function Home() {
   const [translatedText, setTranslatedText] = useState("");
   const [targetLanguage, setTargetLanguage] = useState("");
   const [activeTab, setActiveTab] = useState<"text" | "document">("text");
+  const [isRight, setIsRight] = useState(true);
 
 
   const getLanguageCode = (name: string): string => {
@@ -49,6 +50,7 @@ export default function Home() {
     const tempLang = sourceLanguage;
     setSourceLanguage(targetLanguage);
     setTargetLanguage(tempLang);
+    setIsRight((prev) => !prev);
   };
 
   useEffect(() => {
@@ -91,8 +93,7 @@ export default function Home() {
             onTranslate={() => {}}
           />
           <SwitchIcon
-            userText={userText}
-            translated_text={translatedText}
+            isRight={isRight}
             onClick={handleSwap}
           />
           <Translation

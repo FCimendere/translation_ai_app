@@ -36,6 +36,8 @@ const ToTranslate = ({
         value={userText?.charAt(0).toUpperCase() + userText?.slice(1)}
         onChange={(e) => setUserText(e.target.value)}
         onKeyDown={handleKeyDown}
+        placeholder="Type your text here..."
+        maxLength={500}
         className="border border-gray-300 rounded-md p-3 min-h-[200px] resize-none focus:outline-none focus:ring-2 focus:ring-green-400 transition"
       />
       <div className="mb-4 pt-6 pb-8 text-md text-green">
