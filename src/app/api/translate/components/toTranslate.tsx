@@ -1,8 +1,6 @@
 "use client";
 
-import { useState} from "react";
 import React from "react";
-import Dropdown from "./Dropdown/Dropdown";
 import { items } from "@/app/api/utils/languages";
 
 

@@ -1,4 +1,4 @@
-import { google } from "@ai-sdk/google";
+// import { google } from "@ai-sdk/google";
 import { openai } from "@ai-sdk/openai";
 import { NextResponse } from "next/server";
 import { generateText } from "ai";
@@ -43,7 +43,7 @@ ${text}
 
     result = schema.parse(JSON.parse(jsonMatch[0]));
   } catch (e) {
-    return new Response("LLM response parse error", { status: 500 });
+    return new Response(`LLM response parse error - ${e}`, { status: 500 });
   }
 
   return NextResponse.json(result);
