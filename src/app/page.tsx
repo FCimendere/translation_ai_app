@@ -7,8 +7,7 @@ import SwitchIcon from "@/app/api/translate/components/switchIcon";
 import CustomButton from "@/app/api/translate/components/button";
 import { Languages, FileInput } from "lucide-react";
 import { items } from "@/app/api/utils/languages";
-// import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-// import type { RootState } from "@/app/store/store";
+import toast from "react-hot-toast";
 
 export default function Home() {
   const [userText, setUserText] = useState("");
@@ -18,30 +17,42 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<"text" | "document">("text");
   const [isRight, setIsRight] = useState(true);
 
-
   const getLanguageCode = (name: string): string => {
     return (
-      items.find(
-        (item) => item.name.toLowerCase() === name.toLowerCase()
-      )?.code || name
+      items.find((item) => item.name.toLowerCase() === name.toLowerCase())
+        ?.code || name
     );
   };
-  
 
   const handleTargetLanguageChange = async (newLang: string) => {
     setTargetLanguage(newLang);
 
     if (!userText.trim()) return;
 
-    const response = await fetch("/api/translate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: userText, targetLanguage: newLang }),
-    });
+    const toastId = toast.loading("Translating...");
 
-    const data = await response.json();
-    setSourceLanguage(getLanguageCode(data.sourceLanguage));
-    setTranslatedText(data.translation);
+    try {
+      const response = await fetch("/api/translate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: userText, targetLanguage: newLang }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        toast.error(`Error: ${errorText}`, { id: toastId });
+        return;
+      }
+
+      const data = await response.json();
+      setSourceLanguage(getLanguageCode(data.sourceLanguage));
+      setTranslatedText(data.translation);
+
+      toast.success("Translation successful!", { id: toastId });
+    } catch (error) {
+      console.error("Unexpected error:", error);
+      toast.error("Unexpected error during translation.", { id: toastId });
+    }
   };
 
   const handleSwap = () => {
@@ -58,7 +69,6 @@ export default function Home() {
       setTranslatedText("");
       setSourceLanguage("");
       setTargetLanguage("");
-
     }
   }, [userText]);
 
@@ -92,10 +102,7 @@ export default function Home() {
             sourceLanguage={sourceLanguage}
             onTranslate={() => {}}
           />
-          <SwitchIcon
-            isRight={isRight}
-            onClick={handleSwap}
-          />
+          <SwitchIcon isRight={isRight} onClick={handleSwap} />
           <Translation
             translated_text={translatedText}
             targetLanguage={targetLanguage}
@@ -108,9 +115,22 @@ export default function Home() {
 
       {activeTab === "document" && (
         <div className="text-center text-gray-600 mt-12 justify-center items-center">
-          <p className="flex flex-row gap-2 p-6 justify-center items-center text-[color:var(--accent-400)]"> Document translation feature will be here soon! <FileInput /></p>
+          <p className="flex flex-row gap-2 p-6 justify-center items-center text-[color:var(--accent-400)]">
+            {" "}
+            Document translation feature will be here soon! <FileInput />
+          </p>
         </div>
       )}
+      <div className="fixed bottom-4 right-8 p-2 text-sm text-[color:var(--primary-300)]">
+        <a
+          href="https://www.flaticon.com/free-icons/subject"
+          title="subject icons"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Subject icon/favicon created by ekays.dsgn - Flaticon
+        </a>
+      </div>
     </div>
   );
 }

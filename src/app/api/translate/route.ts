@@ -29,7 +29,7 @@ ${text}
 
   const { text: llmResponse } = await generateText({
     // model: google("models/gemini-2.0-flash-exp"),
-    model: openai("gpt-4-turbo"),
+    model: openai("gpt-4.1-mini-2025-04-14"),
     prompt,
     maxTokens,
     temperature: 0.5,
@@ -45,8 +45,6 @@ ${text}
   } catch (e) {
     return new Response("LLM response parse error", { status: 500 });
   }
-
-  console.log("LLM Response:", llmResponse);
 
   return NextResponse.json(result);
 }
