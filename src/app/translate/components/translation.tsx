@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Dropdown from "./Dropdown/Dropdown";
 import DropdownItem from "./DropdownItem/DropdownItem";
-import { items } from "@/app/utils/languages"; 
+
 
 const Translation = ({
   translated_text,
@@ -11,12 +11,14 @@ const Translation = ({
   setTargetLanguage,
   onTranslate,
   userText,
+  items
 }: {
   translated_text: string;
   targetLanguage: string;
   setTargetLanguage: (code: string) => void;
   onTranslate: () => void;
   userText: string;
+  items: { code: string; name: string }[];
 }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 

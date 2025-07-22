@@ -1,19 +1,19 @@
 "use client";
 
 import React from "react";
-import { items } from "@/app/utils/languages";
-
 
 const ToTranslate = ({
   userText,
   setUserText,
   onTranslate,
   sourceLanguage,
+  items,
 }: {
   userText: string;
   setUserText: (val: string) => void;
   sourceLanguage: string;
   onTranslate: () => void;
+  items: { code: string; name: string }[];
 }) => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {

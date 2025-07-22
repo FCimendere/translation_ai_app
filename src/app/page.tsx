@@ -134,6 +134,7 @@ export default function Home() {
             setUserText={setUserText}
             sourceLanguage={sourceLanguage}
             onTranslate={() => {}}
+            items={items}
           />
           <SwitchIcon isRight={isRight} onClick={handleSwap} />
           <Translation
@@ -142,6 +143,7 @@ export default function Home() {
             setTargetLanguage={handleTargetLanguageChange}
             onTranslate={() => {}}
             userText={userText}
+            items={items}
           />
         </div>
       )}
