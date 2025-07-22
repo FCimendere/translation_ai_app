@@ -9,9 +9,6 @@ const schema = z.object({
   translation: z.string(),
 });
 
-export const maxDuration = 30; // seconds
-export const maxTokens = 256; // tokens
-
 export async function POST(req: Request): Promise<Response> {
   const { text, targetLanguage } = await req.json();
 
