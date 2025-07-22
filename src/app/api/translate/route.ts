@@ -31,8 +31,6 @@ ${text}
     // model: google("models/gemini-2.0-flash-exp"),
     model: openai("gpt-4.1-mini-2025-04-14"),
     prompt,
-    maxTokens,
-    temperature: 0.5,
   });
 
   let result;
