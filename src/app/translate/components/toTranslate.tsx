@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { items } from "@/app/api/utils/languages";
+import { items } from "@/app/utils/languages";
 
 
 const ToTranslate = ({

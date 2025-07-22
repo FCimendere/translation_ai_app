@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Dropdown from "./Dropdown/Dropdown";
 import DropdownItem from "./DropdownItem/DropdownItem";
-import { items } from "@/app/api/utils/languages"; 
+import { items } from "@/app/utils/languages"; 
 
 const Translation = ({
   translated_text,

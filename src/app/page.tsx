@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import ToTranslate from "@/app/api/translate/components/toTranslate";
-import Translation from "@/app/api/translate/components/translation";
-import SwitchIcon from "@/app/api/translate/components/switchIcon";
-import CustomButton from "@/app/api/translate/components/button";
+import ToTranslate from "@/app/translate/components/toTranslate";
+import Translation from "@/app/translate/components/translation";
+import SwitchIcon from "@/app/translate/components/switchIcon";
+import CustomButton from "@/app/translate/components/button";
 import { Languages, FileInput } from "lucide-react";
-import { items } from "@/app/api/utils/languages";
+import { items } from "@/app/utils/languages";
 import toast from "react-hot-toast";
 
 export default function Home() {
